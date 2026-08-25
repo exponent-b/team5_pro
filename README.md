@@ -250,7 +250,7 @@ team5_pro/
 ```
 
 - `team5_final_pro.ipynb`: 세 개인 프로젝트의 장점을 선별해 구성한 최종 통합본
-- `개인프로젝트결과/`: 팀원별 원본 분석 Notebook과 김양일 분석에 사용한 CSV
+- `개인프로젝트결과/`: 팀원별 원본 분석 과정 보관용 Notebook입니다. 데이터 경로·분할 방식·`random_state`는 개인별로 다를 수 있으며, 공식 결과와 재현성 기준은 `team5_final_pro.ipynb`를 따릅니다. 김양일 분석에 사용한 CSV도 함께 보관합니다.
 
 > Kaggle 페이지의 라이선스 표시는 `Other (specified in description)`입니다. 원본 CSV를 공개 저장소에 재배포하기 전 데이터 페이지의 세부 이용 조건을 확인하세요. 데이터 재배포가 불확실하다면 CSV 대신 다운로드 안내만 제공하는 방식을 권장합니다.
 
@@ -298,7 +298,7 @@ Notebook에 기록된 실행 환경:
 | Matplotlib | 3.11.1 |
 | Seaborn | 0.13.2 |
 
-## 재현성
+## 최종 통합본 재현성
 
 - 모든 주요 실험의 `random_state=10`
 - Stratified 5-Fold 교차검증
