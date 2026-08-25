@@ -1,10 +1,10 @@
-# Airline Passenger Satisfaction
+# ✈️ Airline Passenger Satisfaction
 
 ### 서비스 평가·운항 정보·승객 특성을 활용한 만족도 이진분류 및 승객 군집 분석
 
 > 129,880명의 항공 승객 데이터를 기반으로 만족 여부를 예측하고, 모델 해석과 탐색적 군집 분석을 통해 항공 서비스 개선 가설을 도출한 팀 프로젝트입니다.
 
-[최종 분석 Notebook](<final_save/team5_final copy_23.ipynb>) · [데이터 출처](https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction)
+[최종 통합 Notebook](team5_final_pro.ipynb) · [개인 프로젝트 결과](개인프로젝트결과/) · [데이터 출처](https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction)
 
 ---
 
@@ -68,7 +68,7 @@
 ### 데이터 해석 시 주의사항
 
 - `Unnamed: 0`과 `id`는 식별자이므로 모델 입력에서 제외했습니다.
-- 서비스 평가의 `0`은 최하점과 구분되는 `Not Applicable` 응답으로 해석하며 원자료 값을 유지했습니다.
+- 서비스 평가의 `0`은 공식 설명만으로 모든 항목에서 의미를 일관되게 확정하기 어렵습니다. 따라서 결측치나 오입력으로 단정해 대체·삭제하지 않고 원자료 값을 유지했으며, 해석 시 이 불확실성을 함께 고려했습니다.
 - 지연시간의 `0`은 지연 없음, 만족도 타깃의 `0`은 중립·불만족 클래스를 의미합니다.
 - 출발·도착 지연시간의 상관계수는 0.9655로 높아 중요도 해석 시 중복 정보를 고려했습니다.
 
@@ -96,7 +96,7 @@ flowchart LR
 - 비행 거리와 지연시간은 오른쪽으로 치우쳐 있으나 실제 운항 상황일 수 있어 임의로 삭제하지 않았습니다.
 - 서비스 항목 사이의 높은 상관관계로 인해 개별 중요도가 여러 변수에 나뉘어 나타날 수 있습니다.
 
-> EDA에서 확인한 차이는 **관련성**이며 서비스 변경의 인과효과를 의미하지 않습니다. 또한 서비스 평가의 0을 포함한 원자료 평균은 서비스 이용 여부에 관한 정보도 함께 반영할 수 있습니다.
+> EDA에서 확인한 차이는 **관련성**이며 서비스 변경의 인과효과를 의미하지 않습니다. 또한 서비스 평가 `0`의 의미가 항목별로 다를 가능성이 있으므로 집단 평균을 해석할 때 주의가 필요합니다.
 
 ## 데이터 전처리
 
@@ -111,7 +111,7 @@ flowchart LR
 | 누수 방지 | Pipeline, ColumnTransformer | 각 CV fold의 학습 데이터에서만 전처리 학습 |
 | 재현성 | `random_state=10` | 동일 실험 결과 재현 |
 
-서비스 평가 0은 일반적인 결측치와 의미가 다르므로 최종 모델에서 원자료 값을 유지했습니다. 향후에는 `Not Applicable` 여부를 별도 변수로 분리한 뒤 성능과 해석 안정성을 비교할 수 있습니다.
+서비스 평가 `0`은 결측치로 명시되지 않았고 의미도 확정하기 어려워 최종 모델에서는 원자료 값을 유지했습니다. 향후 데이터 사전을 확보한 뒤 `Not Applicable` 여부를 별도 변수로 분리하고, 원값 유지·결측 처리 방식과의 민감도 분석을 수행할 수 있습니다.
 
 ## 모델링 및 검증
 
@@ -232,39 +232,57 @@ Confusion Matrix
 
 ## 프로젝트 구조
 
-현재 프로젝트의 핵심 파일 기준 구조입니다.
+현재 GitHub 저장소의 파일 구조입니다.
 
 ```text
 team5_pro/
 ├── README.md
-├── final_save/
-│   └── team5_final copy_23.ipynb  # 실행 완료 최종 분석본
-├── data/
-│   ├── train.csv
-│   └── test.csv
-├── 근우/
-│   └── air_saticfaction.ipynb
-├── 태양/
-│   ├── 01_EDA.ipynb
-│   ├── 02_전처리_모델링.ipynb
-│   └── 03_클러스터링.ipynb
-└── ppt/
+├── team5_final_pro.ipynb                 # 실행 결과가 저장된 최종 통합 분석본
+└── 개인프로젝트결과/
+    ├── 항공만족_배근우.ipynb
+    ├── 항공만족_배지수.ipynb
+    └── 항공만족_김양일/
+        ├── 01_EDA.ipynb
+        ├── 02_전처리_모델링.ipynb
+        ├── 03_클러스터링.ipynb
+        ├── train.csv
+        └── test.csv
 ```
+
+- `team5_final_pro.ipynb`: 세 개인 프로젝트의 장점을 선별해 구성한 최종 통합본
+- `개인프로젝트결과/`: 팀원별 원본 분석 Notebook과 김양일 분석에 사용한 CSV
 
 > Kaggle 페이지의 라이선스 표시는 `Other (specified in description)`입니다. 원본 CSV를 공개 저장소에 재배포하기 전 데이터 페이지의 세부 이용 조건을 확인하세요. 데이터 재배포가 불확실하다면 CSV 대신 다운로드 안내만 제공하는 방식을 권장합니다.
 
 ## 실행 방법
 
-1. [Kaggle 데이터](https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction)에서 `train.csv`, `test.csv`를 내려받습니다.
-2. 두 파일을 저장소의 `data/` 폴더에 배치합니다.
-3. 다음 라이브러리를 설치하고 Jupyter Notebook을 실행합니다.
+1. 저장소를 내려받습니다.
+
+```bash
+git clone https://github.com/exponent-b/team5_pro.git
+cd team5_pro
+```
+
+2. 다음 라이브러리를 설치하고 Jupyter Notebook을 실행합니다.
 
 ```bash
 pip install pandas numpy scikit-learn xgboost lightgbm shap matplotlib seaborn jupyter
 jupyter notebook
 ```
 
-4. [최종 Notebook](<final_save/team5_final copy_23.ipynb>)을 열고 위에서 아래로 실행합니다.
+3. [최종 통합 Notebook](team5_final_pro.ipynb)을 엽니다.
+
+4. GitHub에서 다시 실행할 때는 데이터 경로 설정 셀을 아래처럼 지정한 뒤 위에서 아래로 실행합니다.
+
+```python
+from pathlib import Path
+
+DATA_DIR = Path("개인프로젝트결과") / "항공만족_김양일"
+TRAIN_PATH = DATA_DIR / "train.csv"
+TEST_PATH = DATA_DIR / "test.csv"
+```
+
+> Notebook에 저장된 출력은 최종 실행 결과입니다. 다른 위치에서 실행할 경우 위 상대경로를 사용하면 저장소 안의 CSV를 읽을 수 있습니다.
 
 Notebook에 기록된 실행 환경:
 
@@ -294,9 +312,9 @@ Notebook에 기록된 실행 환경:
 
 | 팀원 | 주요 발표 및 정리 역할 |
 |---|---|
-| Jisu | 문제 정의, 데이터 구조, EDA, 발표자료 통합 |
-| 근우 | 데이터 전처리, 모델 비교, 교차검증 및 튜닝 |
-| 태양 | 최종 평가, 임계값, SHAP, 군집 분석 및 결론 |
+| 배지수 | 문제 정의, 데이터 구조, EDA, 발표자료 통합 |
+| 배근우 | 데이터 전처리, 모델 비교, 교차검증 및 튜닝 |
+| 김양일 | 최종 평가, 임계값, SHAP, 군집 분석 및 결론 |
 
 모든 팀원이 데이터 확인부터 결과 해석까지 전체 분석 과정을 함께 검토했으며, 위 역할은 주요 정리 및 발표 범위를 나타냅니다.
 
