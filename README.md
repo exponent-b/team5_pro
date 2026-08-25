@@ -1,4 +1,4 @@
-# ✈️ Airline Passenger Satisfaction
+# Airline Passenger Satisfaction
 
 ### 서비스 평가·운항 정보·승객 특성을 활용한 만족도 이진분류 및 승객 군집 분석
 
